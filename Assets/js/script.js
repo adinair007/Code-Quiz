@@ -1,7 +1,7 @@
-var startBttn = document.querySelectorAll("start");
-var timerEl = document.querySelectorAll("timer");
-var contentDiv = document.querySelectorAll("content");
-var qsDiv = document.querySelectorAll("questions");
+var startBttn = document.getElementById("start");
+var timerEl = document.getElementById("timer");
+var contentDiv = document.getElementById("content");
+var qDiv = document.getElementById("questions");
 
 var time = 100;
 var timerInterval;
@@ -19,56 +19,18 @@ function startQuiz () {
         }
     }, 1000);
     
-    gameIndex++;
+    quizIndex++;
     showQuestion();
-}
-
-
-function showQuestion() {
-    var question = questions[gameIndex];
-    qsDiv.innerHTML = '';
-    var questionDiv = document.createElement("div");
-    var titleP = document.createElement ("p");
-    titleP.textContent = question.title;
-    questionDiv.append(titleP);
-
-    for (var i = 0; i < question.choices.length; i++) {
-        var bttnEl = document.createElement("button");
-        var choice = question.choices[i];
-        bttnEl.textContent = choice;
-        bttnEl.onclick = checckanswer;
-        bttnEl.setAttribute("value", question.choices[i]);
-        questionDiv.append(bttnEl);
-    }
-    qsDiv.append(questionDiv);
-}
-
-
-function checkAnswer(){
-    if (this.value !== questions[gameIndex].answer) {
-        time -= 10;
-        if (time < 0) {
-            time = 0;
-        }
-        timerEl.textContent = time;
-    }
-
-    gameIndex++;
-    if (gameIndex === questions.length) {
-        endQuiz();
-    } else {
-        showQuestion();
-    }
 }
 
 
 function endQuiz() {
     clearInterval(timerInterval);
-    var names = prompt("Enter your name.");
+    var initials = prompt("Enter your initials.");
     var highscore = timerEl.textContent;
     console.log(highscore);
 
-    if ( names !== "" ) {
+    if ( initials !== "" ) {
         var scores = JSON.parse(localStorage.getItem("highscores")) || [];
         var userScore = {
             initials,
@@ -80,5 +42,42 @@ function endQuiz() {
     }
 }
 
+
+function showQuestion() {
+    var question = questions[quizIndex];
+    qDiv.innerHTML = '';
+    var questionDiv = document.createElement("div");
+    var titleP = document.createElement ("p");
+    titleP.textContent = question.title;
+    questionDiv.append(titleP);
+
+    for (var i = 0; i < question.choices.length; i++) {
+        var bttnEl = document.createElement("button");
+        var choice = question.choices[i];
+        bttnEl.textContent = choice;
+        bttnEl.onclick = checkAnswer;
+        bttnEl.setAttribute("value", question.choices[i]);
+        questionDiv.append(bttnEl);
+    }
+    qDiv.append(questionDiv);
+}
+
+
+function checkAnswer(){
+    if (this.value !== questions[quizIndex].answer) {
+        time -= 10;
+        if (time < 0) {
+            time = 0;
+        }
+        timerEl.textContent = time;
+    }
+
+    quizIndex++;
+    if (quizIndex === questions.length) {
+        endQuiz();
+    } else {
+        showQuestion();
+    }
+}
 
 startBttn.onclick = startQuiz;
