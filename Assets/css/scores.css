@@ -1,0 +1,15 @@
+body {
+    color:navy;
+}
+
+
+#highscoreEl{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    padding: 20px;
+    font:'Montserrat';
+    font-weight: 50px;
+    color:white;
+}

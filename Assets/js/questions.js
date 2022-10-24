@@ -42,8 +42,7 @@ var questions = [
     },
 
     {
-        title: "8. Which is the correct JavaScript syntax to change the HTML content given below?"/
-        "<p id=”test”>Hello World!</p>" ,
+        title: "8. Which is the correct JavaScript syntax to change the HTML content given below? <p id=”test”>Hello World!</p>" ,
         choices: ['document.getElementById(“test”).innerHTML = “Hello”;', 'document.getElementsById(“test”).innerHTML = “Hello”;', 'document.getElementById(test).innerHTML = “Hello”;', 'document.getElementByTagName(“p”)[0].innerHTML = “Hello”;'],
         answer: 'document.getElementById(“test”).innerHTML = “Hello”;'
     },
