@@ -4,8 +4,8 @@ function getHighScores() {
     scores.forEach(score => {
         var listEl = document.createElement("li");
         listEl.textContent = `${score.initials} -- ${score.highscore}`;
-        var olEl = document.getElementById("highscoreEl");
-        olEl.appendChild(listEl)
+        var ordliEl = document.getElementById("highscoreEl");
+        ordliEl.appendChild(listEl)
     });
 }
 
