@@ -1,7 +1,7 @@
 var startBttn = document.getElementById("start");
 var timerEl = document.getElementById("timer");
 var contentDiv = document.getElementById("content");
-var qsDiv = document.getElementById("questions");
+var qEl = document.getElementById("questions");
 
 var time = 100;
 var timerInterval;
@@ -22,16 +22,33 @@ function startQuiz () {
 }
 
 
+function endQuiz() {
+    clearInterval(timerInterval);
+    var initials = prompt("Enter your initials.");
+    var highscore = timerEl.textContent;
+    console.log(highscore);
+
+    if ( initials !== "" ) {
+        var scores = JSON.parse(localStorage.getItem("highscores")) || [];
+        var userScore = {
+            initials,
+            highscore
+        }
+        scores.push(userScore);
+        localStorage.setItem("highscores", JSON.stringify(scores));
+        window.location.href = "high_scores.html";
+    }
+}
 
 
 
 function showQuestion() {
     var question = questions[quizIndex];
-    qsDiv.innerHTML = '';
-    var questionDiv = document.createElement("div");
+    qEl.innerHTML = '';
+    var questionEl = document.createElement("div");
     var titleP = document.createElement ("div");
     titleP.innerHTML = question.title;
-    questionDiv.append(titleP);
+    questionEl.append(titleP);
 
     for (var i = 0; i < question.choices.length; i++) {
         var bttnEl = document.createElement("button");
@@ -39,9 +56,9 @@ function showQuestion() {
         bttnEl.textContent = choice;
         bttnEl.onclick = checkAnswer;
         bttnEl.setAttribute("value", question.choices[i]);
-        questionDiv.append(bttnEl);
+        questionEl.append(bttnEl);
     }
-    qsDiv.append(questionDiv);
+    qEl.append(questionEl);
 }
 
 
@@ -59,25 +76,6 @@ function checkAnswer(){
         endQuiz();
     } else {
         showQuestion();
-    }
-}
-
-
-function endQuiz() {
-    clearInterval(timerInterval);
-    var initials = prompt("Enter your initials.");
-    var highscore = timerEl.textContent;
-    console.log(highscore);
-
-    if ( initials !== "" ) {
-        var scores = JSON.parse(localStorage.getItem("highscores")) || [];
-        var userScore = {
-            initials,
-            highscore
-        }
-        scores.push(userScore);
-        localStorage.setItem("highscores", JSON.stringify(scores));
-        window.location.href = "high_scores.html";
     }
 }
 
